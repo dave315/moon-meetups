@@ -5,12 +5,13 @@ require 'database_cleaner'
 require 'omniauth-github'
 require 'dotenv'
 require 'launchy'
+require 'omniauth'
 
 require_relative '../app.rb'
 
 set :environment, :test
 
-# Omniauth.config.test_mode = true
+OmniAuth.config.test_mode = true
 
 RSpec.configure do |config|
   config.filter_run focus: true

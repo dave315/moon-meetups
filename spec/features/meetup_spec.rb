@@ -61,7 +61,7 @@ end
 
 # ACCEPTANCE CRITERIA!
 
-# [ ] I must be signed in.
+# [X] I must be signed in.
 # [X] I must supply a name.
 # [X] I must supply a location.
 # [X] I must supply a description.
@@ -70,7 +70,6 @@ end
 
 # Still need to:
 # - look into what the schema still needs (foreign key between users & meetups?)
-# - handle oauth fakeout snafu
 # - add form validation for empty fields (html require)
 # - add errors for form validation
 # - final set of tests to join meetups
@@ -78,16 +77,16 @@ end
 feature "User can create new meetup" do
   scenario "user can add a meetup for the hulahoop club on Saturn" do
 
-    # user = User.create!(provider: 'github',
-    # uid: 1,
-    # email: 'user@example.com',
-    # username: 'user1',
-    # avatar_url: 'http:user.img')
-    #
-    # visit "/"
-    # binding.pry
-    # sign_in_as(user)
-    # expect(page).to have_content("Sign out")
+    user = User.create!(provider: 'github',
+    uid: 1,
+    email: 'user@example.com',
+    username: 'user1',
+    avatar_url: 'http:user.img')
+
+    visit "/"
+    binding.pry
+    sign_in_as(user)
+    expect(page).to have_content("Sign out")
 
     visit "/new"
 
