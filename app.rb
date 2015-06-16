@@ -34,6 +34,16 @@ get '/' do
   erb :index
 end
 
+get '/new' do
+  erb :new
+end
+
+post '/new' do
+  @new_meetup = Meetup.create!(params)
+  flash[:notice] = 'You have created a new Meetup!'
+  redirect "/meetups/#{@new_meetup.id}"
+end
+
 get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
   erb :show

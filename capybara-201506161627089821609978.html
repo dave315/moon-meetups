@@ -14,25 +14,26 @@
     <a class="logo" href="/">Meetups in Space</a>
 
     <ul class="top-bar-section">
-      <% if signed_in? %>
-        <li>Signed in as <%= current_user.username %></a></li>
-           <% else %>
+      
         <li><a href="/auth/github">Sign in</a></li>
-      <% end %>
+      
     </ul>
   </div>
 </div>
 
-<% if flash.any? %>
-  <div class="flash">
-    <div class="container">
-      <%= flash[:notice] %>
-    </div>
-  </div>
-<% end %>
 
 <div class="container">
-  <%= yield %>
+  <h1>Add a New Meetup</h1>
+
+<form>
+  <label for="meetup-name">Meetup Name</label>
+  <input type="text" id="meetup-name" name="meetup-name" placeholder="Meetup Name"></input>
+  <label for="location">Location</label>
+  <input type="text" id="location" name="location" placeholder="location"><input>
+  <label for="description">Description</label>
+  <input type="text" id="description" name="description" placeholder="description"></input>
+</form>
+
 </div>
 
 </body>

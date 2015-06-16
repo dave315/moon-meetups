@@ -14,4 +14,5 @@ group :test, :development do
   gem 'pry'
   gem 'rspec'
   gem 'database_cleaner'
+  gem 'launchy'
 end

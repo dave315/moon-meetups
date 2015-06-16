@@ -14,25 +14,20 @@
     <a class="logo" href="/">Meetups in Space</a>
 
     <ul class="top-bar-section">
-      <% if signed_in? %>
-        <li>Signed in as <%= current_user.username %></a></li>
-           <% else %>
+      
         <li><a href="/auth/github">Sign in</a></li>
-      <% end %>
+      
     </ul>
   </div>
 </div>
 
-<% if flash.any? %>
-  <div class="flash">
-    <div class="container">
-      <%= flash[:notice] %>
-    </div>
-  </div>
-<% end %>
 
 <div class="container">
-  <%= yield %>
+  <h1>All Meetups</h1>
+<ul>
+  
+</ul>
+
 </div>
 
 </body>

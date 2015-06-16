@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meetups</title>
+  <link rel="stylesheet" href="stylesheets/normalize.css" />
+  <link rel="stylesheet" href="stylesheets/app.css" />
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <a class="logo" href="/">Meetups in Space</a>
+
+    <ul class="top-bar-section">
+      
+        <li><a href="/auth/github">Sign in</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="container">
+  <h1>Add a New Meetup</h1>
+
+<form class="new_meetup" action="/new" method="post">
+  <label for="meetup-name">Meetup Name</label>
+  <input type="text" id="meetup-name" name="meetup-name" placeholder="Meetup Name"></input>
+
+  <label for="location">Location</label>
+  <input type="text" id="location" name="location" placeholder="location"><input>
+
+  <label for="description">Description</label>
+  <input type="text" id="description" name="description" placeholder="description"></input>
+
+  <label for="submit">Submit</label>
+  <input type="submit" id="submit" name="submit" value="submit"></input>
+</form>
+
+</div>
+
+</body>
+</html>
