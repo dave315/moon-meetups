@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616171442) do
+ActiveRecord::Schema.define(version: 20150617165448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendees", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "meetup_id"
+    t.boolean "organizer"
+  end
 
   create_table "meetups", force: :cascade do |t|
     t.string "name",        null: false

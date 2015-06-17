@@ -84,9 +84,9 @@ feature "User can create new meetup" do
     avatar_url: 'http:user.img')
 
     visit "/"
-    binding.pry
+
     sign_in_as(user)
-    expect(page).to have_content("Sign out")
+    expect(page).to have_content("Signed in as #{user.username}")
 
     visit "/new"
 
@@ -99,4 +99,39 @@ feature "User can create new meetup" do
     expect(page).to have_content 'You have created a new Meetup!'
   end
 
+end
+
+
+# Acceptance Criteria:
+#
+# [X] I must be signed in.
+# [X] From a meetups detail page, I should click a button to join the meetup.
+# [] I should see a message that tells let's me know when I have successfully joined a meetup.
+
+feature "user can join a meetup" do
+  scenario "from the meetups detail page, user clicks on join to join the meetup" do
+
+    jupiter = Meetup.create!(name: "Train Concert",
+    description: "Make your way through the constellations and rage with Train on Jupiter ",
+    location: "The Red Spot")
+
+    user = User.create!(provider: 'github',
+    uid: 1,
+    email: 'mlg@alrightokay.com',
+    username: 'mlg',
+    avatar_url: 'http:user.img')
+
+    visit "/"
+
+    sign_in_as(user)
+    expect(page).to have_content("Signed in as #{user.username}")
+
+    visit "/meetups/#{jupiter.id}"
+
+    click_button("Join")
+    expect(page).to have_content("Congratulations, you just joined #{jupiter.name}, we'll see you at #{jupiter.location}!")
+
+
+
+  end
 end
