@@ -42,3 +42,7 @@ a:visited {
 form.new_meetup input {
   color: black;
 }
+
+button {
+  color: black;
+}

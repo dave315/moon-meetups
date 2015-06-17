@@ -106,7 +106,7 @@ end
 #
 # [X] I must be signed in.
 # [X] From a meetups detail page, I should click a button to join the meetup.
-# [] I should see a message that tells let's me know when I have successfully joined a meetup.
+# [X] I should see a message that tells let's me know when I have successfully joined a meetup.
 
 feature "user can join a meetup" do
   scenario "from the meetups detail page, user clicks on join to join the meetup" do
@@ -131,6 +131,47 @@ feature "user can join a meetup" do
     click_button("Join")
     expect(page).to have_content("Congratulations, you just joined #{jupiter.name}, we'll see you at #{jupiter.location}!")
 
+  end
+end
+
+# Acceptance Criteria:
+#
+# On the details page for a meetup, I should see a list of the members that have already joined.
+# I should see each member's avatar.
+# I should see each member's username.
+
+feature "user can see all attendees of meetup" do
+  scenario "user clicks on meetup and expects to see attendees" do
+
+    jupiter = Meetup.create!(name: "Train Concert",
+    description: "Make your way through the constellations and rage with Train on Jupiter ",
+    location: "The Red Spot")
+
+    user = User.create!(provider: 'github',
+    uid: 1,
+    email: 'DAVE@ALRIGHTOKAY.com',
+    username: 'DAVE',
+    avatar_url: 'http:user.img')
+
+    user2 = User.create!(provider: 'github',
+    uid: 2,
+    email: 'mlg@alrightokay.com',
+    username: 'mlg',
+    avatar_url: 'http:user.img')
+
+    attendee1 = Attendee.create!(user_id: 1, meetup_id: jupiter.id, organizer: false)
+    attendee2 = Attendee.create!(user_id: 2, meetup_id: jupiter.id, organizer: true)
+
+    visit "/"
+
+    sign_in_as(user)
+    expect(page).to have_content("Signed in as #{user.username}")
+
+    visit "/meetups/#{jupiter.id}"
+    binding.pry
+    expect(page).to have_content("Attendees")
+    expect(page).to have_content("#{user.username}")
+    expect(page).to have_content("#{user2.username}")
 
 
   end
