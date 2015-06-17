@@ -78,7 +78,7 @@ feature "User can create new meetup" do
   scenario "user can add a meetup for the hulahoop club on Saturn" do
 
     user = User.create!(provider: 'github',
-    uid: 1,
+    uid: '1',
     email: 'user@example.com',
     username: 'user1',
     avatar_url: 'http:user.img')
@@ -116,7 +116,7 @@ feature "user can join a meetup" do
     location: "The Red Spot")
 
     user = User.create!(provider: 'github',
-    uid: 1,
+    uid: '1',
     email: 'mlg@alrightokay.com',
     username: 'mlg',
     avatar_url: 'http:user.img')
@@ -136,9 +136,9 @@ end
 
 # Acceptance Criteria:
 #
-# On the details page for a meetup, I should see a list of the members that have already joined.
-# I should see each member's avatar.
-# I should see each member's username.
+# [X] On the details page for a meetup, I should see a list of the members that have already joined.
+# [] I should see each member's avatar.
+# [X] I should see each member's username.
 
 feature "user can see all attendees of meetup" do
   scenario "user clicks on meetup and expects to see attendees" do
@@ -148,19 +148,19 @@ feature "user can see all attendees of meetup" do
     location: "The Red Spot")
 
     user = User.create!(provider: 'github',
-    uid: 1,
+    uid: '1',
     email: 'DAVE@ALRIGHTOKAY.com',
     username: 'DAVE',
     avatar_url: 'http:user.img')
 
     user2 = User.create!(provider: 'github',
-    uid: 2,
+    uid: '2',
     email: 'mlg@alrightokay.com',
     username: 'mlg',
     avatar_url: 'http:user.img')
 
-    attendee1 = Attendee.create!(user_id: 1, meetup_id: jupiter.id, organizer: false)
-    attendee2 = Attendee.create!(user_id: 2, meetup_id: jupiter.id, organizer: true)
+    attendee1 = Attendee.create!(user_id: user.id, meetup_id: jupiter.id, organizer: false)
+    attendee2 = Attendee.create!(user_id: user2.id, meetup_id: jupiter.id, organizer: true)
 
     visit "/"
 
@@ -168,10 +168,12 @@ feature "user can see all attendees of meetup" do
     expect(page).to have_content("Signed in as #{user.username}")
 
     visit "/meetups/#{jupiter.id}"
-    binding.pry
     expect(page).to have_content("Attendees")
     expect(page).to have_content("#{user.username}")
     expect(page).to have_content("#{user2.username}")
+    page.find("#avatar#{user.id}")['src'].should have_content "#{user.avatar_url}"
+    page.find("#avatar#{user2.id}")['src'].should have_content "#{user2.avatar_url}"
+
 
 
   end
