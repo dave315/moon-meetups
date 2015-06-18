@@ -14,28 +14,29 @@
     <a class="logo" href="/">Meetups in Space</a>
 
     <ul class="top-bar-section">
-      <% if signed_in? %>
-        <li>Signed in as <%= current_user.username %></a></li>
-           <% else %>
-        <li><a href="/auth/github">Sign in</a></li>
-      <% end %>
+      
+        <li>Signed in as mlg</a></li>
+           
     </ul>
   </div>
 </div>
 
-<% if flash.any? %>
   <div class="flash">
     <div class="container">
-      <%= flash[:notice] %>
+      You're now signed in as mlg!
     </div>
   </div>
-<% end %>
 
 <div class="container">
-  <%= yield %>
+  <h1>All Meetups</h1>
+<ul>
+  
+    <a href='/meetups/6'><li>Train Concert</li></a>
+  <br>
+  <a href="/new"><button>Add New Meetup</button>
+</ul>
+
 </div>
 
-<script src="/javascripts/jquery-1.11.3.min.js"></script>
-<script src="/javascripts/app.js"></script>
 </body>
 </html>

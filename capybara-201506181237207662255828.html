@@ -14,28 +14,29 @@
     <a class="logo" href="/">Meetups in Space</a>
 
     <ul class="top-bar-section">
-      <% if signed_in? %>
-        <li>Signed in as <%= current_user.username %></a></li>
-           <% else %>
+      
         <li><a href="/auth/github">Sign in</a></li>
-      <% end %>
+      
     </ul>
   </div>
 </div>
 
-<% if flash.any? %>
-  <div class="flash">
-    <div class="container">
-      <%= flash[:notice] %>
-    </div>
-  </div>
-<% end %>
 
 <div class="container">
-  <%= yield %>
+  <h1>Train Concert</h1>
+<h2>The Red Spot</h2>
+<h2>Make your way through the constellations and rage with Train on Jupiter </h2>
+
+<h2>Attendees</h2>
+<ul>
+  
+</ul>
+
+<form class="join_meetup" action="/meetups/6/join" method="post">
+  <button type="submit" name="join_meetup">Join</button>
+</form>
+
 </div>
 
-<script src="/javascripts/jquery-1.11.3.min.js"></script>
-<script src="/javascripts/app.js"></script>
 </body>
 </html>

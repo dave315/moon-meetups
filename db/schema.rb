@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20150617203205) do
   enable_extension "plpgsql"
 
   create_table "attendees", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "meetup_id"
-    t.boolean "organizer"
-    t.boolean "active"
+    t.integer "user_id",   null: false
+    t.integer "meetup_id", null: false
+    t.boolean "organizer", null: false
+    t.boolean "active",    null: false
   end
 
   create_table "meetups", force: :cascade do |t|

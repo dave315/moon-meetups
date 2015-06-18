@@ -39,16 +39,25 @@ get '/new' do
 end
 
 post '/new' do
+  authenticate!
   @new_meetup = Meetup.create!(params)
-  #create new attendee with organizer = true
+  @attendee = Attendee.create!(user_id: current_user.id, meetup_id: @new_meetup.id, organizer: true, active: true)
   flash[:notice] = 'You have created a new Meetup!'
   redirect "/meetups/#{@new_meetup.id}"
 end
 
 post '/meetups/:id/join' do
   meetup = Meetup.find(params[:id])
-  Attendee.create!(user_id: current_user.id, meetup_id: params[:id], organizer: false)
+
+  authenticate!
+  unless Attendee.where(user_id: current_user.id, meetup_id: params[:id], active: true).empty?
+     flash[:notice] = "You have already joined this meetup."
+     redirect "/meetups/#{params[:id]}"
+  end
+
+  Attendee.create!(user_id: current_user.id, meetup_id: params[:id], organizer: false, active: true)
   flash[:notice] = "Congratulations, you just joined #{meetup.name}, we\'ll see you at #{meetup.location}!"
+
   redirect "/meetups/#{params[:id]}"
 end
 

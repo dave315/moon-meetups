@@ -83,7 +83,13 @@ feature "User can create new meetup" do
     username: 'user1',
     avatar_url: 'http:user.img')
 
-    visit "/"
+    visit "/new"
+    fill_in('Meetup Name', with: 'Hulahoop Club' )
+    fill_in('Location', with: 'Saturn, Outer-Ring')
+    fill_in('Description', with: 'Beginners welcome, just bring a passion and your own hoop! See ya there! :D' )
+    click_button('submit')
+
+    expect(page).to have_content('You need to sign in if you want to do that!')
 
     sign_in_as(user)
     expect(page).to have_content("Signed in as #{user.username}")
@@ -121,11 +127,13 @@ feature "user can join a meetup" do
     username: 'mlg',
     avatar_url: 'http:user.img')
 
-    visit "/"
+    visit "/meetups/#{jupiter.id}"
+
+    click_button("Join")
+    expect(page).to have_content('You need to sign in if you want to do that!')
 
     sign_in_as(user)
     expect(page).to have_content("Signed in as #{user.username}")
-
     visit "/meetups/#{jupiter.id}"
 
     click_button("Join")
@@ -137,7 +145,7 @@ end
 # Acceptance Criteria:
 #
 # [X] On the details page for a meetup, I should see a list of the members that have already joined.
-# [] I should see each member's avatar.
+# [X] I should see each member's avatar.
 # [X] I should see each member's username.
 
 feature "user can see all attendees of meetup" do
@@ -159,8 +167,8 @@ feature "user can see all attendees of meetup" do
     username: 'mlg',
     avatar_url: 'http:user.img')
 
-    attendee1 = Attendee.create!(user_id: user.id, meetup_id: jupiter.id, organizer: false)
-    attendee2 = Attendee.create!(user_id: user2.id, meetup_id: jupiter.id, organizer: true)
+    attendee1 = Attendee.create!(user_id: user.id, meetup_id: jupiter.id, organizer: false, active: true)
+    attendee2 = Attendee.create!(user_id: user2.id, meetup_id: jupiter.id, organizer: true, active: true)
 
     visit "/"
 
@@ -174,7 +182,35 @@ feature "user can see all attendees of meetup" do
     page.find("#avatar#{user.id}")['src'].should have_content "#{user.avatar_url}"
     page.find("#avatar#{user2.id}")['src'].should have_content "#{user2.avatar_url}"
 
+  end
+end
 
+feature "User cannot join the same meetup twice." do
+  scenario "User tries to attend a meetup that they are already attending" do
 
+    jupiter = Meetup.create!(name: "Train Concert",
+    description: "Make your way through the constellations and rage with Train on Jupiter ",
+    location: "The Red Spot")
+
+    user = User.create!(provider: 'github',
+    uid: '1',
+    email: 'mlg@alrightokay.com',
+    username: 'mlg',
+    avatar_url: 'http:user.img')
+
+    visit "/meetups/#{jupiter.id}"
+
+    click_button("Join")
+    expect(page).to have_content('You need to sign in if you want to do that!')
+
+    sign_in_as(user)
+    expect(page).to have_content("Signed in as #{user.username}")
+    visit "/meetups/#{jupiter.id}"
+
+    click_button("Join")
+    expect(page).to have_content("Congratulations, you just joined #{jupiter.name}, we'll see you at #{jupiter.location}!")
+
+    click_button("Join")
+    expect(page).to have_content("You have already joined this meetup.")
   end
 end
