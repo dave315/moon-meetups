@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'omniauth-github'
+require 'sinatra/json'
 
 require_relative 'config/application'
 
@@ -61,8 +62,26 @@ post '/meetups/:id/join' do
   redirect "/meetups/#{params[:id]}"
 end
 
+post '/meetups/:id/leave' do
+  defector = Attendee.where(user_id: current_user.id, meetup_id: params[:id], active: true)
+  defector.first.update!(active: false)
+  redirect "/meetups/#{params[:id]}"
+end
+
+get '/meetups/:id/authenticate' do
+  if Attendee.where(user_id: current_user.id, meetup_id: params[:id], active: true).empty?
+     result = "Join"
+  else
+    result = "Leave"
+  end
+  json({
+    button: result
+    })
+end
+
 get '/meetups/:id' do
-  @meetup = Meetup.find(params[:id])
+  @current_meetup = Meetup.find(params[:id])
+  @active_attendees = @current_meetup.attendees.where(active: true)
   erb :show
 end
 

@@ -39,10 +39,22 @@ a:visited {
   background-color: #3B9089;
 }
 
+ul.attendees {
+  list-style: none;
+}
+
+ul.attendees li {
+margin: 10px;
+}
+
 form.new_meetup input {
   color: black;
 }
 
 button {
   color: black;
+}
+
+img.avi {
+  max-width: 100px;
 }
