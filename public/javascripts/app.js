@@ -17,3 +17,11 @@ $(document).ready(function(){
         }
       });
 });
+
+$('#comment-head').click(function() {
+  if ($('form.comments').css('display') == 'none'){
+    $('form.comments').show();
+  } else {
+    $('form.comments').hide();
+  }
+});

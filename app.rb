@@ -79,9 +79,16 @@ get '/meetups/:id/authenticate' do
     })
 end
 
+post '/meetups/:id/comment' do
+  Comment.create!(body: params[:comment_body], user_id: current_user.id, meetup_id: params[:id] )
+  redirect "/meetups/#{params[:id]}"
+end
+
 get '/meetups/:id' do
   @current_meetup = Meetup.find(params[:id])
   @active_attendees = @current_meetup.attendees.where(active: true)
+  @all_the_comments = @current_meetup.comments
+
   erb :show
 end
 

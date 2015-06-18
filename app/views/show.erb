@@ -14,3 +14,15 @@
 <form class="join_meetup" action="/meetups/<%= @current_meetup.id %>/join" method="post">
   <button type="submit" id="join-meetup" name="join_meetup"><%= @button_message %></button>
 </form>
+
+<h3>Comments</h3>
+<ul class="comment-list">
+  <% @all_the_comments.each do |comment| %>
+  <li><%= comment.user.username %> sez <%= comment.body %></li>
+  <% end %>
+</ul>
+<h3 id="comment-head">CLICK TO LEAVE A COMMENT</h3>
+<form class="comments" action="/meetups/<%= @current_meetup.id %>/comment" method="post">
+  <textarea name="comment_body" rows="8" cols="40"></textarea><br>
+  <button type="submit" id="leave-comment" name="leave_comment">Leave Comment</button>
+</form>
